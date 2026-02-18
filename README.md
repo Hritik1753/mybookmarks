@@ -138,6 +138,146 @@ Make sure to add environment variables in your deployment settings.
 
 ---
 
+## Problem faced
+
+1️⃣ Google OAuth Redirecting to localhost After Deployment
+
+Problem:
+After deploying to Vercel, Google login redirected to:
+
+http://localhost:3000
+
+
+instead of the production domain.
+
+Cause:
+Supabase Site URL was still set to localhost.
+
+Solution:
+
+Updated Site URL in Supabase Authentication settings.
+
+Added production URL in Redirect URLs.
+
+Verified correct OAuth callback URL in Google Cloud Console.
+
+Result:
+Login now correctly redirects to production domain.
+
+2️⃣ Environment Variables Not Working in Production
+
+Problem:
+Application worked locally but failed after deployment.
+
+Cause:
+Environment variables were not added in Vercel dashboard.
+
+Solution:
+
+Added required environment variables in Vercel Project Settings.
+
+Redeployed the application.
+
+3️⃣ Git Push Error (src refspec main does not match any)
+
+Problem:
+
+src refspec main does not match any
+
+
+Cause:
+Branch mismatch (master vs main) and no initial commit.
+
+Solution:
+
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git push -u origin main
+
+4️⃣ Input Text Not Fully Black
+
+Problem:
+Input text color was not fully black.
+
+Cause:
+Tailwind default styling override.
+
+Solution:
+Explicitly added:
+
+class="text-black"
+
+5️⃣ Realtime Updates Not Working Properly
+
+Problem:
+Database changes were not reflecting instantly in UI.
+
+Cause:
+
+Realtime not enabled in Supabase table.
+
+Missing frontend subscription.
+
+No proper cleanup of channel.
+
+Solution:
+
+Enabled Realtime in Supabase dashboard.
+
+Subscribed to changes:
+
+const channel = supabase
+  .channel('realtime-channel')
+  .on(
+    'postgres_changes',
+    { event: '*', schema: 'public', table: 'your_table_name' },
+    (payload) => {
+      fetchData()
+    }
+  )
+  .subscribe()
+
+return () => {
+  supabase.removeChannel(channel)
+}
+
+
+Result:
+UI updates instantly without page refresh.
+
+📚 What I Learned
+
+OAuth redirect handling in production
+
+Environment-based configuration
+
+Realtime database subscriptions
+
+Deployment debugging
+
+Branch management in Git
+
+Importance of proper documentation
+
+🔥 Key Concepts Implemented
+
+Google OAuth Flow
+
+Supabase Authentication
+
+Realtime Database Subscriptions
+
+Environment Variables Management
+
+Production Deployment
+
+State Management
+
+🙌 Conclusion
+
+This project helped me understand real-world authentication flow, deployment configuration, realtime updates, and debugging production-level issues.
+
 ## 👨‍💻 Author
 
 Made with ❤️ by Hritik Paswab
