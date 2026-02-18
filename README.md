@@ -14,6 +14,141 @@ pnpm dev
 bun dev
 ```
 
+
+# 🔖 Bookmark Manager
+
+A modern bookmark management web app built with Next.js, Supabase, and Tailwind CSS.
+
+Users can securely log in with Google and manage their bookmarks in real-time across multiple tabs.
+
+---
+
+## 🚀 Features
+
+- 🔐 Google Authentication (Supabase Auth)
+- ➕ Add bookmarks
+- ✏️ Edit bookmarks
+- 🗑️ Delete bookmarks
+- ⚡ Real-time sync across multiple tabs
+- 🎨 Clean Facebook-style UI (Tailwind CSS)
+- 🔒 Protected routes
+
+---
+
+## 🛠️ Tech Stack
+
+- Next.js (App Router)
+- Supabase (Database + Auth + Realtime)
+- Tailwind CSS
+- TypeScript
+
+---
+
+## 📸 Screenshots
+
+### Login Page
+Google sign-in authentication page.
+
+### Dashboard
+Bookmark management dashboard with CRUD functionality.
+
+---
+
+## ⚙️ Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/your-username/bookmark-manager.git
+cd bookmark-manager
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+---
+
+## 🔑 Setup Supabase
+
+1. Create a project on Supabase
+2. Enable Google Authentication
+3. Create a `bookmarks` table:
+
+```sql
+create table bookmarks (
+  id uuid primary key default uuid_generate_v4(),
+  title text,
+  url text,
+  user_id uuid references auth.users on delete cascade,
+  created_at timestamp with time zone default timezone('utc'::text, now())
+);
+```
+
+4. Set **Replica Identity = FULL** (for realtime delete support)
+
+---
+
+## 🔐 Environment Variables
+
+Create a `.env.local` file in the root:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
+```
+
+---
+
+## ▶️ Run the Project
+
+```bash
+npm run dev
+```
+
+Open:
+
+```
+http://localhost:3000
+```
+
+---
+
+## 🌍 Deployment
+
+You can deploy easily on:
+
+- Vercel (Recommended)
+- Netlify
+- Any Node.js hosting
+
+Make sure to add environment variables in your deployment settings.
+
+---
+
+## 📌 Future Improvements
+
+- Search functionality
+- Dark mode
+- Bookmark categories
+- Favicon preview
+- Drag & drop sorting
+
+---
+
+## 👨‍💻 Author
+
+Made with ❤️ by Hritik Paswab
+
+---
+
+## 📄 License
+
+This project is open-source and available under the MIT License.
+
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
